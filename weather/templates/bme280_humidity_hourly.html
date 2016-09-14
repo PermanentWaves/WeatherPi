@@ -1,0 +1,14 @@
+<div class="row">
+    <i class="wi wi-humidity green"></i> 48hr Averaged Humidity
+    <canvas id="humidity-hourly-chart" width="790" height="400"></canvas>
+</div>
+<script>
+    $(document).ready(function () {
+        var humidity_hourly = {{ data.humidity_hourly|safe }};
+        ctx = $("#humidity-hourly-chart");
+        Chart.Line(ctx, {
+            data: humidity_hourly
+        });
+    })
+
+</script>

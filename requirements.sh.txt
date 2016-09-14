@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sudo apt-get install build-essential i2c-tools apache2 libapache2-mod-wsgi git
+sudo apt-get install python-smbus python-flask libpython-dev python-dev python-pip mariadb-server python-mysqldb
+
+# Required for Adafruit BME280 driver
+cd ~
+git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
+cd Adafruit_Python_GPIO
+sudo python setup.py install

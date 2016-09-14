@@ -1,0 +1,36 @@
+<div class="quad">
+    <div><i class="wi wi-thermometer blue"></i> {{ data.current.temperature }}<i class="wi wi-fahrenheit"></i></div>
+    <div><i class="wi wi-barometer yellow"></i> {{ data.current.pressure }} <span style="font-size: .5em;">hPa</span></div>
+    <div><i class="wi wi-humidity green"></i> {{ data.current.humidity }}<span style="font-size: .5em;">%</span></div>
+    <div class="grey current-label">{{ data.current.label }}</div>
+    <div id="refresh"><i class="wi wi-cloud-refresh blue"></i></div>
+</div>
+<div class="quad">
+    <canvas id="temperature-chart" width="395" height="220"></canvas>
+</div>
+<div class="quad">
+    <canvas id="humidity-chart" width="395" height="220"></canvas>
+</div>
+<div class="quad">
+    <canvas id="pressure-chart" width="395" height="220"></canvas>
+</div>
+<script>
+    $(document).ready(function () {
+        var temperature_current = {{ data.temperature_current|safe }};
+        var pressure_current = {{ data.pressure_current|safe }};
+        var humidity_current = {{ data.humidity_current|safe }};
+        ctx = $("#temperature-chart");
+        var temperature_chart = Chart.Line(ctx, {
+            data: temperature_current
+        });
+        ctx = $("#pressure-chart");
+        var pressure_chart = Chart.Line(ctx, {
+            data: pressure_current
+        });
+        ctx = $("#humidity-chart");
+        var humidity_chart = Chart.Line(ctx, {
+            data: humidity_current
+        });
+        $("#refresh").click(function() { location.reload(); });
+    })
+</script>

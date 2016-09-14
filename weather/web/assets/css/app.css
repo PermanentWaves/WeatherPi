@@ -1,0 +1,93 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #252830;
+    color: #f8f8f8;
+    font-family: 'Segoe UI', 'Lucida Grande', 'Ubuntu', 'sans-serif';
+    font-size: 10pt;
+}
+
+#refresh {
+    position: absolute;
+    top: -10px;
+    left: 350px;
+    font-size: 28pt;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.swiper-container {
+    width: 800px;
+    height: 480px;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    top: auto;
+    bottom: 10px;
+    height: 25px;
+    width: 30px;
+}
+
+.current-label {
+    font-size: .7em;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: block;
+    font-size: 20pt;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 800px;
+    height: 220px;
+    padding: 10px;
+}
+
+.quad {
+    float: left;
+    font-size: 26pt;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 400px;
+    height: 220px;
+    padding: 10px;
+}
+
+.quad > div {
+    margin: 10px 0 5px 15px;
+}
+
+.black {
+    color: #252830;
+}
+
+.white {
+    color: #f8f8f8;
+}
+
+.grey {
+    color: #656565;
+}
+
+.blue {
+    color: #1ca8dd;
+}
+
+.green {
+    color: #1bc98e;
+}
+
+.red {
+    color: #e64759;
+}
+
+.purple {
+    color: #9f86ff;
+}
+
+.yellow {
+    color: #e4d836;
+}

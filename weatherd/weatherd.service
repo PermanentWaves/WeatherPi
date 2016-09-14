@@ -1,0 +1,21 @@
+[Unit]
+Description=weatherd
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/WeatherPi/weatherd/
+ExecStart=/usr/bin/python /home/pi/WeatherPi/weatherd/weatherd.py
+StandardOutput=syslog
+StandardError=syslog
+Restart=on-abort
+
+# Latitude / Longitude in Decimal
+Environment=LATITUDE=
+Environment=LONGITUDE=
+Environment=FORECAST_IO_API=
+
+[Install]
+WantedBy=multi-user.target
