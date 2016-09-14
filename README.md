@@ -10,7 +10,7 @@ You can use the [requirements.sh](requirements.sh.txt) file to install necessary
 
 ##weatherd
 The weatherd service polls the BME280 sensor using the Adafruit_BME280 driver and stores the results every n seconds. 
-[weatherd.service](weatherd/weathered.service) template is included for using systemd.
+[weatherd.service](weatherd/weatherd.service) template is included for using systemd.
 Alternately, you could run [weatherd.py](weatherd/weatherd.py)  directly.
 
 ##weather
