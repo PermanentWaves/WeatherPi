@@ -1,7 +1,7 @@
 $(document).ready(function () {
     swiper();
-    bme280_current();
-    bme280_hourly();
+    update_minutely();
+    update_hourly();
 });
 
 function swiper() {
@@ -14,14 +14,17 @@ function swiper() {
     })
 }
 
-function bme280_current() {
-    $("#bme280-current").load('/bme280-current')
-    setTimeout('bme280_current()', 60000);
+function update_minutely() {
+    $("#bme280-current").load('/bme280-current');
+    setTimeout('update_minutely()', 60000);
 }
 
-function bme280_hourly() {
-    $("#bme280-temperature-hourly-slide").load('/bme280-hourly/temperature')
-    $("#bme280-pressure-hourly-slide").load('/bme280-hourly/pressure')
-    $("#bme280-humidity-hourly-slide").load('/bme280-hourly/humidity')
-    setTimeout('bme280_hourly()', 360000);
+function update_hourly() {
+    $("#bme280-temperature-hourly-slide").load('/bme280-hourly/temperature');
+    $("#bme280-pressure-hourly-slide").load('/bme280-hourly/pressure');
+    $("#bme280-humidity-hourly-slide").load('/bme280-hourly/humidity');
+    $("#bme280-temperature-weekly-slide").load('/bme280-weekly/temperature');
+    $("#bme280-pressure-weekly-slide").load('/bme280-weekly/pressure');
+    $("#bme280-humidity-weekly-slide").load('/bme280-weekly/humidity');
+    setTimeout('update_hourly()', 360000);
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, render_template, abort
-import bme280Get
+import bme280 as bme280db
 import db as persist
 import sys
 import logging
@@ -16,7 +16,7 @@ db_info = {
 }
 
 db = persist.Db(db_info)
-bme280 = bme280Get.Bme280Get(db)
+bme280 = bme280db.Bme280(db)
 
 app = Flask(__name__, static_url_path="", static_folder='web')
 
@@ -50,7 +50,7 @@ def bme280_hourly(template):
     except KeyError:
         abort(404)
 
-    temperature_hourly, pressure_hourly, humidity_hourly = bme280.get_hourly()
+    temperature_hourly, pressure_hourly, humidity_hourly = bme280.get_hourly_average()
     data = {
         'temperature_hourly': temperature_hourly,
         'pressure_hourly': pressure_hourly,
@@ -58,6 +58,26 @@ def bme280_hourly(template):
     }
     return render_template(template, data=data)
 
+
+@app.route('/bme280-weekly/<template>')
+def bme280_weekly(template):
+    templates = {
+        'temperature': 'bme280_temperature_weekly.html',
+        'pressure': 'bme280_pressure_weekly.html',
+        'humidity': 'bme280_humidity_weekly.html'
+    }
+    try:
+        template = templates[template]
+    except KeyError:
+        abort(404)
+
+    temperature_weekly, pressure_weekly, humidity_weekly = bme280.get_weekly()
+    data = {
+        'temperature_weekly': temperature_weekly,
+        'pressure_weekly': pressure_weekly,
+        'humidity_weekly': humidity_weekly
+    }
+    return render_template(template, data=data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -1,0 +1,14 @@
+<div class="row">
+    <i class="wi wi-humidity green"></i> Last 2 Weeks Humidity
+    <canvas id="humidity-weekly-chart" width="790" height="400"></canvas>
+</div>
+<script>
+    $(document).ready(function () {
+        var humidity_weekly = {{ data.humidity_weekly|safe }};
+        ctx = $("#humidity-weekly-chart");
+        Chart.Line(ctx, {
+            data: humidity_weekly
+        });
+    })
+
+</script>
