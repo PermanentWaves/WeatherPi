@@ -8,25 +8,50 @@ body, html {
     font-size: 10pt;
 }
 
-#refresh {
-    position: absolute;
-    top: -10px;
-    left: 350px;
-    font-size: 28pt;
-    z-index: 10;
-    cursor: pointer;
-}
-
-.swiper-container {
+#app-container {
     width: 800px;
     height: 480px;
+    margin: auto;
 }
 
-.swiper-button-next, .swiper-button-prev {
-    top: auto;
-    bottom: 10px;
-    height: 25px;
-    width: 30px;
+#menu {
+    margin: auto;
+    font-size: 20pt;
+    color: #1ca8dd;
+    text-align: center;
+}
+
+#menu a {
+    color: #1ca8dd;
+    text-decoration: none;
+}
+
+#previous, #pagination, #next {
+    display: inline-block;
+    margin: 0 10px 0 10px;
+}
+
+.dot {
+    display: inline-block;
+    margin: 0 10px 0 10px;
+    width:10px;
+    height:10px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.dot:hover {
+    background: #656565;
+}
+
+.dot-active {
+        background: #1ca8dd;
+}
+
+.dot-active:hover {
+    background: #1ca8dd;
 }
 
 .current-label {
@@ -34,14 +59,8 @@ body, html {
     margin-bottom: 15px;
 }
 
-.row {
-    display: block;
+.chart {
     font-size: 20pt;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    width: 800px;
-    height: 220px;
     padding: 10px;
 }
 
@@ -51,7 +70,7 @@ body, html {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    width: 400px;
+    width: 395px;
     height: 220px;
     padding: 10px;
 }

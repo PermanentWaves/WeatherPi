@@ -1,0 +1,13 @@
+<div id="menu">
+    <div id="previous"><a href="{{ data.menu.previous }}"><i class="wi wi-direction-left"></i></a></div>
+    <div id="pagination">
+        {% for x in range(data.menu.total) %}
+            {% if x == data.menu.current_id %}
+                 <i class="dot dot-active"></i>
+            {% else %}
+                <i class="dot"  onclick="location.href='{{ data.menu.menu[x] }}'"></i>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="next"><a href="{{ data.menu.next }}"><i class="wi wi-direction-right"></i></a></div>
+</div>

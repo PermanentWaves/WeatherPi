@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template, abort
 import bme280 as bme280db
+import menu as site_menu
 import db as persist
 import sys
 import logging
@@ -17,67 +18,59 @@ db_info = {
 
 db = persist.Db(db_info)
 bme280 = bme280db.Bme280(db)
+menu = site_menu.Menu()
 
 app = Flask(__name__, static_url_path="", static_folder='web')
 
 
 @app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/bme280-current')
 def bme280_current():
     temperature_current, pressure_current, humidity_current, current = bme280.get_current()
     data = {
+        'menu': menu.get('/'),
         'current': current,
         'temperature_current': temperature_current,
         'pressure_current': pressure_current,
         'humidity_current': humidity_current
     }
-    return render_template('bme280_current.html', data=data)
+    return render_template('current.html', data=data)
 
 
 @app.route('/bme280-hourly/<template>')
 def bme280_hourly(template):
+    data = {'menu': menu.get('/bme280-hourly/' + template)}
     templates = {
-        'temperature': 'bme280_temperature_hourly.html',
-        'pressure': 'bme280_pressure_hourly.html',
-        'humidity': 'bme280_humidity_hourly.html'
+        'temperature': {'icon': 'wi wi-thermometer blue', 'title': '48hr Averaged Temperature'},
+        'pressure': {'icon': 'wi wi-barometer yellow', 'title': '48hr Averaged Pressure'},
+        'humidity': {'icon': 'wi wi-humidity green', 'title': '48hr Averaged Humidity'}
     }
     try:
-        template = templates[template]
+        data.update(templates[template])
     except KeyError:
         abort(404)
 
-    temperature_hourly, pressure_hourly, humidity_hourly = bme280.get_hourly_average()
-    data = {
-        'temperature_hourly': temperature_hourly,
-        'pressure_hourly': pressure_hourly,
-        'humidity_hourly': humidity_hourly
-    }
-    return render_template(template, data=data)
+    hourly = bme280.get_hourly_average()
+    data.update({'chart': hourly[template]})
+
+    return render_template('chart.html', data=data)
 
 
 @app.route('/bme280-weekly/<template>')
 def bme280_weekly(template):
+    data = {'menu': menu.get('/bme280-weekly/' + template)}
     templates = {
-        'temperature': 'bme280_temperature_weekly.html',
-        'pressure': 'bme280_pressure_weekly.html',
-        'humidity': 'bme280_humidity_weekly.html'
+        'temperature': {'icon': 'wi wi-thermometer blue', 'title': '2 Weeks Temperature'},
+        'pressure': {'icon': 'wi wi-barometer yellow', 'title': '2 Weeks Pressure'},
+        'humidity': {'icon': 'wi wi-humidity green', 'title': '2 Weeks Humidity'}
     }
     try:
-        template = templates[template]
+        data.update(templates[template])
     except KeyError:
         abort(404)
 
-    temperature_weekly, pressure_weekly, humidity_weekly = bme280.get_weekly()
-    data = {
-        'temperature_weekly': temperature_weekly,
-        'pressure_weekly': pressure_weekly,
-        'humidity_weekly': humidity_weekly
-    }
-    return render_template(template, data=data)
+    weekly = bme280.get_weekly()
+    data.update({'chart': weekly[template]})
+    return render_template('chart.html', data=data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

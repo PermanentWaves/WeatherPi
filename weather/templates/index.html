@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>WeatherPi</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/weather-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/swiper.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/app.css') }}">
-    <script src="{{ url_for('static', filename='/assets/js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/assets/js/swiper.jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='/assets/js/Chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='/assets/js/app.js') }}"></script>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>WeatherPi {% block title %}{% endblock %}</title>
+        {% block css %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/weather-icons.min.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/app.css') }}">
+        {% endblock %}
+    {% endblock %}
 </head>
 <body>
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div id="bme280-current" class="swiper-slide"></div>
-        <div id="bme280-temperature-hourly-slide" class="swiper-slide"></div>
-        <div id="bme280-pressure-hourly-slide" class="swiper-slide"></div>
-        <div id="bme280-humidity-hourly-slide" class="swiper-slide"></div>
-        <div id="bme280-temperature-weekly-slide" class="swiper-slide"></div>
-        <div id="bme280-pressure-weekly-slide" class="swiper-slide"></div>
-        <div id="bme280-humidity-weekly-slide" class="swiper-slide"></div>
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+<div id="app-container">
+    {% block body %}{% endblock %}
+    {% include "menu.html" %}
 </div>
+{% block script %}
+    <script src="{{ url_for('static', filename='/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/assets/js/Chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='/assets/js/app.js') }}"></script>
+{% endblock %}
 </body>
 </html>

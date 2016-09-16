@@ -51,7 +51,7 @@ class Bme280:
         temperature = self.chart_data(labels, 'Temperature', '#1ca8dd', temperature)
         pressure = self.chart_data(labels, 'Pressure', '#e4d836', pressure)
         humidity = self.chart_data(labels, 'Humidity', '#1bc98e', humidity)
-        return temperature, pressure, humidity
+        return {'temperature': temperature, 'pressure': pressure, 'humidity': humidity}
 
     def get_weekly(self):
         c = self.db.cursor()
@@ -73,7 +73,7 @@ class Bme280:
         temperature = self.chart_data_high_low(labels, '#1ca8dd', '#656565', temperature_high, temperature_low)
         pressure = self.chart_data_high_low(labels, '#e4d836', '#656565', pressure_high, pressure_low)
         humidity = self.chart_data_high_low(labels, '#1bc98e', '#656565', humidity_high, humidity_low)
-        return temperature, pressure, humidity
+        return {'temperature': temperature, 'pressure': pressure, 'humidity': humidity}
 
     @staticmethod
     def chart_sort(data):

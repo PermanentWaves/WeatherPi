@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block head %}
+    {{ super() }}
+    <meta http-equiv="refresh" content="3600">
+{% endblock %}
+{% block body %}
+    <div class="chart">
+        <i class="{{ data.icon }}"></i> {{ data.title }}
+        <canvas id="data-chart" width="790" height="400"></canvas>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script>
+        $(document).ready(function () {
+            var chart_data = {{ data.chart|safe }};
+            var ctx = $("#data-chart");
+            Chart.Line(ctx, {
+                data: chart_data
+            });
+        })
+
+    </script>
+{% endblock %}

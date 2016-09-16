@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "jquery": "~3.1.0",
-    "swiper": "~3.3.1",
     "weather-icons": "~2.0.10",
     "chartjs": "~2.2.2"
   }
