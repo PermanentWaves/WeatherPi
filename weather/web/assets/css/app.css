@@ -36,10 +36,11 @@ body, html {
     margin: 0 10px 0 10px;
     width:10px;
     height:10px;
-    border: solid 1px gray;
+    border: solid 2px gray;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+    cursor: pointer;
 }
 
 .dot:hover {
@@ -47,11 +48,29 @@ body, html {
 }
 
 .dot-active {
-        background: #1ca8dd;
+        border: solid 2px #1ca8dd;
 }
 
 .dot-active:hover {
-    background: #1ca8dd;
+    background: none;
+}
+
+.arrow-right {
+    border-right:4px solid #1ca8dd;
+    border-bottom:4px solid #1ca8dd;
+    width:12px;
+    height:12px;
+    transform: rotate(-45deg);
+    margin-top:2px;
+}
+
+.arrow-left {
+    border-right:4px solid #1ca8dd;
+    border-bottom:4px solid #1ca8dd;
+    width:12px;
+    height:12px;
+    transform: rotate(135deg);
+    margin-top:2px;
 }
 
 .current-label {
