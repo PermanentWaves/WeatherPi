@@ -12,13 +12,21 @@
 </head>
 <body>
 <div id="app-container">
+    <div id="toggle-input" class="gear"></div><div id="range-form"><form method="GET"><input type="text" id="range" name="range"></form></div>
     {% block body %}{% endblock %}
     {% include "menu.html" %}
 </div>
 {% block script %}
     <script src="{{ url_for('static', filename='/assets/js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='/assets/js/Chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='/assets/js/app.js') }}"></script>
 {% endblock %}
+<script>
+    $(document).ready(function() {
+        $("#toggle-input").click(function() {
+            $("#range-form").toggle();
+            $("#range").focus();
+        })
+    })
+</script>
 </body>
 </html>

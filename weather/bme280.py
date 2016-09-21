@@ -7,9 +7,9 @@ class Bme280:
     def __init__(self, db):
         self.db = db
 
-    def get_current(self):
+    def get_current(self, span):
         now = datetime.now()
-        offset = now - timedelta(hours=2)
+        offset = now - timedelta(hours=span)
         c = self.db.cursor()
         query = "SELECT LOWER(DATE_FORMAT(date_time, '%%l:%%i %%p')) as date_time, " \
                 "temperature, " \
@@ -19,7 +19,7 @@ class Bme280:
                 "WHERE date_time > %s"
         c.execute(query, offset)
         data = c.fetchall()
-        row = data[len(data) - 2]  # most recent row
+        row = data[len(data) - span]  # most recent row
         current_label = "{:%l:%M %p}".format(offset) + " - " + "{:%l:%M %p}".format(now)
         current_label = current_label.lower()
         current = {
@@ -35,9 +35,9 @@ class Bme280:
         c.close()
         return temperature, pressure, humidity, current
 
-    def get_hourly_average(self):
+    def get_averaged(self, span):
         c = self.db.cursor()
-        offset = datetime.now() - timedelta(hours=48)
+        offset = datetime.now() - timedelta(hours=span)
         query = "SELECT LOWER(DATE_FORMAT(date_time, '%%D %%l:00 %%p')) AS dt, " \
                 "AVG(temperature) AS temperature, " \
                 "AVG(pressure) AS pressure, " \
@@ -53,9 +53,9 @@ class Bme280:
         humidity = self.chart_data(labels, 'Humidity', '#1bc98e', humidity)
         return {'temperature': temperature, 'pressure': pressure, 'humidity': humidity}
 
-    def get_weekly(self):
+    def get_high_low(self, span):
         c = self.db.cursor()
-        offset = datetime.now() - timedelta(hours=336)
+        offset = datetime.now() - timedelta(hours=(span * 24))
         query = "SELECT DATE_FORMAT(date_time, '%%b %%D') AS dt, " \
                 "MAX(temperature) AS temperature_high, " \
                 "MIN(temperature) AS temperature_low, " \

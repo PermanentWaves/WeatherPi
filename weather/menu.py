@@ -1,12 +1,12 @@
 class Menu:
     menu_pages = [
-        '/bme280-hourly/humidity',
-        '/bme280-hourly/pressure',
-        '/bme280-hourly/temperature',
+        '/bme280-averaged/humidity',
+        '/bme280-averaged/pressure',
+        '/bme280-averaged/temperature',
         '/',
-        '/bme280-weekly/temperature',
-        '/bme280-weekly/pressure',
-        '/bme280-weekly/humidity',
+        '/bme280-high-low/temperature',
+        '/bme280-high-low/pressure',
+        '/bme280-high-low/humidity',
     ]
 
     def __init__(self):

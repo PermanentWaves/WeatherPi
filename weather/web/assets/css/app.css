@@ -15,6 +15,7 @@ body, html {
 }
 
 #menu {
+    clear: both;
     margin: auto;
     font-size: 20pt;
     color: #1ca8dd;
@@ -71,6 +72,30 @@ body, html {
     height:12px;
     transform: rotate(135deg);
     margin-top:2px;
+}
+
+.gear {
+    margin: 10px 0 0 760px;
+    position: absolute;
+    color: #656565;
+    z-index: 10;
+    width: 15px;
+    height: 15px;
+    box-shadow: 0 0 0 3px inset;
+    border-radius: 15px;
+    border: 2px dashed;
+}
+
+#range-form {
+    margin: 10px 0 0 700px;
+    position: absolute;
+    z-index: 10;
+    display: none;
+}
+
+#range {
+    width: 50px;
+    border-radius: 5px;
 }
 
 .current-label {

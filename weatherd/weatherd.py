@@ -4,7 +4,6 @@ import sched
 import sys
 import time
 import db
-import os
 
 
 class WeatherD:
@@ -17,16 +16,9 @@ class WeatherD:
     active_modules = {
         'bme280': True,
         'bme280Digest': False,
-        'forecastIO': False
     }
     bme280_interval = MINUTE
     bme280Digest_interval = HOUR * 6
-    soho_interval = DAY * 7
-    forecast_io_interval = HOUR
-    forecast_io_api = os.environ['FORECAST_IO_API']
-    # latitude, longitude in decimal
-    latitude = os.environ['LATITUDE']
-    longitude = os.environ['LONGITUDE']
     db_info = {
         'host': 'localhost',
         'database': 'weather',
@@ -52,10 +44,6 @@ class WeatherD:
         if self.active_modules['bme280Digest']:
             from modules import bme280Digest
             self.modules['bme280Digest'] = bme280Digest.Bme280Digest(self.db, self.scheduler, self.bme280Digest_interval)
-        if self.active_modules['forecastIO']:
-            from modules import forecastIO
-            self.modules['forecastIO'] = \
-                forecastIO.ForecastIO(self.db, self.scheduler, self.forecast_io_interval, self.latitude, self.longitude)
 
     def start(self):
         for module, state in self.active_modules.iteritems():

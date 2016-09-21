@@ -12,10 +12,5 @@ StandardOutput=syslog
 StandardError=syslog
 Restart=on-abort
 
-# Latitude / Longitude in Decimal
-Environment=LATITUDE=
-Environment=LONGITUDE=
-Environment=FORECAST_IO_API=
-
 [Install]
 WantedBy=multi-user.target

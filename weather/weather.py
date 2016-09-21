@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 import bme280 as bme280db
 import menu as site_menu
 import db as persist
@@ -25,7 +25,16 @@ app = Flask(__name__, static_url_path="", static_folder='web')
 
 @app.route('/')
 def bme280_current():
-    temperature_current, pressure_current, humidity_current, current = bme280.get_current()
+    try:
+        int(request.args.get('range'))
+    except (NameError, TypeError):
+        hours = 2
+    else:
+        hours = int(request.args.get('range'))
+
+    if hours < 1:
+        hours = 2
+    temperature_current, pressure_current, humidity_current, current = bme280.get_current(hours)
     data = {
         'menu': menu.get('/'),
         'current': current,
@@ -36,40 +45,60 @@ def bme280_current():
     return render_template('current.html', data=data)
 
 
-@app.route('/bme280-hourly/<template>')
-def bme280_hourly(template):
-    data = {'menu': menu.get('/bme280-hourly/' + template)}
+@app.route('/bme280-averaged/<sensor>')
+def bme280_averaged(sensor):
+    try:
+        int(request.args.get('range'))
+    except (NameError, TypeError):
+        hours = 48
+    else:
+        hours = int(request.args.get('range'))
+
+    if hours < 1:
+        hours = 48
+
+    data = {'menu': menu.get('/bme280-averaged/' + sensor)}
     templates = {
-        'temperature': {'icon': 'wi wi-thermometer blue', 'title': '48hr Averaged Temperature'},
-        'pressure': {'icon': 'wi wi-barometer yellow', 'title': '48hr Averaged Pressure'},
-        'humidity': {'icon': 'wi wi-humidity green', 'title': '48hr Averaged Humidity'}
+        'temperature': {'icon': 'wi wi-thermometer blue', 'title': 'Temperature Averaged Last %s hours' % hours},
+        'pressure': {'icon': 'wi wi-barometer yellow', 'title': 'Pressure Averaged Last %s hours' % hours},
+        'humidity': {'icon': 'wi wi-humidity green', 'title': 'Humidity Averaged Last %s hours' % hours}
     }
     try:
-        data.update(templates[template])
+        data.update(templates[sensor])
     except KeyError:
         abort(404)
 
-    hourly = bme280.get_hourly_average()
-    data.update({'chart': hourly[template]})
+    averaged = bme280.get_averaged(hours)
+    data.update({'chart': averaged[sensor]})
 
     return render_template('chart.html', data=data)
 
 
-@app.route('/bme280-weekly/<template>')
-def bme280_weekly(template):
-    data = {'menu': menu.get('/bme280-weekly/' + template)}
+@app.route('/bme280-high-low/<sensor>')
+def bme280_high_low(sensor):
+    try:
+        int(request.args.get('range'))
+    except (NameError, TypeError):
+        days = 14
+    else:
+        days = int(request.args.get('range'))
+
+    if days < 1:
+        days = 14
+
+    data = {'menu': menu.get('/bme280-high-low/' + sensor)}
     templates = {
-        'temperature': {'icon': 'wi wi-thermometer blue', 'title': '2 Weeks Temperature'},
-        'pressure': {'icon': 'wi wi-barometer yellow', 'title': '2 Weeks Pressure'},
-        'humidity': {'icon': 'wi wi-humidity green', 'title': '2 Weeks Humidity'}
+        'temperature': {'icon': 'wi wi-thermometer blue', 'title': 'Temperature High/Low Last %s days' % days},
+        'pressure': {'icon': 'wi wi-barometer yellow', 'title': 'Pressure High/Low Last %s days' % days},
+        'humidity': {'icon': 'wi wi-humidity green', 'title': 'Humidity High/Low Last %s days' % days}
     }
     try:
-        data.update(templates[template])
+        data.update(templates[sensor])
     except KeyError:
         abort(404)
 
-    weekly = bme280.get_weekly()
-    data.update({'chart': weekly[template]})
+    high_low = bme280.get_high_low(days)
+    data.update({'chart': high_low[sensor]})
     return render_template('chart.html', data=data)
 
 if __name__ == '__main__':
